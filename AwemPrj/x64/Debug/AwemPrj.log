@@ -1,0 +1,6 @@
+﻿  application.cpp
+c:\users\edwin\source\repos\awemprj\awemprj\application.h(17): error C2686: cannot overload static and non-static member functions with the same parameter types
+  c:\users\edwin\source\repos\awemprj\awemprj\application.h(17): note: could be 'ApplicationWindow *Application::newWindow(std::string)'
+  c:\users\edwin\source\repos\awemprj\awemprj\application.h(17): note: or       'ApplicationWindow *Application::newWindow(std::string)'
+c:\users\edwin\source\repos\awemprj\awemprj\application.cpp(35): error C2084: function 'ApplicationWindow *Application::newWindow(std::string)' already has a body
+  c:\users\edwin\source\repos\awemprj\awemprj\application.cpp(22): note: see previous definition of 'newWindow'
