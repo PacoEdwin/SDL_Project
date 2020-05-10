@@ -160,8 +160,25 @@ void ApplicationWindow::render()
 
 void ApplicationWindow::handleEvent(SDL_Event* e)
 {
-	if (e->type == SDL_WINDOWEVENT)
-		m_shown = e->window.windowID == m_windowId;
+	switch (e->type)
+	{
+		case SDL_WINDOWEVENT: {
+			switch (e->window.event) {
+				case SDL_WINDOWEVENT_CLOSE: {
+					std::cout << "asd" << std::endl;
+					break;
+				}
+			}
+
+			m_shown = e->window.windowID == m_windowId;
+			break;
+		}
+
+		case SDL_MOUSEBUTTONDOWN: {
+			m_shown = e->button.windowID == m_windowId;
+			break;
+		}
+	}
 
 	if (!m_shown)
 		return;
