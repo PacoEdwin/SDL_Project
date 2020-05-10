@@ -11,13 +11,16 @@ struct SDL_Renderer;
 class Item
 {
 public:
-	Item() = default;
+	Item();
+	Item(Item*);
 
 	void setId(const std::string&);
-	void setOrder(int);
+	/// For now comment
+	//void setOrder(int);
 	void setPos(float x, float y);
 	void setSize(float w, float h);
 	void setVisible(bool);
+	void setParent(Item*);
 
 	/// Returns deepest child
 	virtual Item* childAt(float x, float y);
@@ -41,4 +44,6 @@ protected:
 	float m_x, m_y;
 	float m_w, m_h;
 	bool m_visible = true;
+
+	Item* m_parent;
 };

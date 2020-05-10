@@ -1,5 +1,7 @@
 // project includes
 #include "image.h"
+#include "application.h"
+#include "applicationwindow.h"
 
 // std includes
 #include <string>
@@ -9,8 +11,8 @@
 #include "SDL.h"
 #include "SDL_image.h"
 
-Image::Image(const std::string& path):
-	Item(),
+Image::Image(const std::string& path, Item* parent):
+	Item(parent),
 	m_path(path) {}
 
 void Image::setPath(const std::string& value)
@@ -66,6 +68,8 @@ void Image::render(SDL_Renderer* renderer)
 
 void Image::onMotion(SDL_MouseMotionEvent* e)
 {
+	bool oldValue = m_visible;
+
 	int x = e->x, y = e->y;
 	if (this->isPointInside(x, y))
 	{
@@ -80,5 +84,18 @@ void Image::onMotion(SDL_MouseMotionEvent* e)
 			m_visible = true;
 		else
 			m_visible = false;
+	}
+
+	if (oldValue != m_visible)
+		update(e->windowID);
+}
+
+void Image::update(int windowId)
+{
+	Application &app = Application::instance();
+	if (auto window = app.windowById(windowId))
+	{
+		ApplicationWindow::RenderCall call = std::bind(&Image::render, this, std::placeholders::_1);
+		window->insertCall(call);
 	}
 }

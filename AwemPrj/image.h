@@ -8,8 +8,7 @@ class Image:
 	public Item
 {
 public:
-	Image() = default;
-	Image(const std::string&);
+	Image(const std::string&, Item* parent = nullptr);
 
 	void setPath(const std::string&);
 
@@ -20,6 +19,7 @@ protected:
 
 private:
 	bool loadImage(SDL_Renderer*);
+	void update(int windowId);
 
 	std::string m_path;
 	SDL_Texture* m_texture;

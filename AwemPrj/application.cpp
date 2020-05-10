@@ -5,6 +5,8 @@
 #include "application.h"
 #include "applicationwindow.h"
 
+// std includes
+#include <iostream>
 
 Application::Application(){}
 
@@ -16,7 +18,19 @@ Application& Application::instance()
 
 void Application::addWindow(ApplicationWindow* window)
 {
+	int id = window->windowId();
+	
+	m_windowById[id] = window;
 	m_windows.push_back(window);
+}
+
+ApplicationWindow* Application::windowById(int value)
+{
+	auto output = m_windowById.find(value);
+	if (output == m_windowById.end())
+		return nullptr;
+
+	return output->second;
 }
 
 ApplicationWindow* Application::newWindow(std::string name)
@@ -25,9 +39,17 @@ ApplicationWindow* Application::newWindow(std::string name)
 		name = "window" + std::to_string(m_windows.size());
 
 	auto window = new ApplicationWindow(name);
+	/// Probalby catch exceptions here
+	try {
+		window->init();
+	}
+	catch (std::exception &e) {
+		std::cout << e.what() << std::endl;
+		delete window;
+		return nullptr;
+	}
 
 	this->addWindow(window);
-
 	return window;
 }
 
@@ -39,6 +61,10 @@ void Application::run()
 	/// While application is running
 	while (!quit)
 	{
+		/// Update
+		for (auto window : m_windows)
+			window->update();
+		
 		int x = 0;
 		int y = 0;
 		/// Handle events on queue
@@ -46,25 +72,11 @@ void Application::run()
 		{
 			/// User requests quit
 			if (e.type == SDL_QUIT)
-			{
 				quit = true;
-			}
 
+			/// Handle events
 			for (auto window : m_windows)
 				window->handleEvent(&e);
 		}
-
-		auto renderer = window->renderer();
-		//window->render();
-		/// Clear screen
-		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(renderer);
-
-		auto items = window->children();
-		for (auto el : items)
-			el->render(renderer);
-
-		/// Update screen
-		SDL_RenderPresent(renderer);
 	}
 }

@@ -1,6 +1,9 @@
 // project includes
 #include "widgetcontainer.h"
 
+WidgetContainer::WidgetContainer(Item* parent):
+	Item(parent) {}
+
 WidgetContainer::WidgetContainer(const std::vector<Item*>& container):
 	m_container(container) {}
 

@@ -4,6 +4,12 @@
 // std includes
 #include <iostream>
 
+Item::Item():
+	m_parent(nullptr) {}
+
+Item::Item(Item* parent) :
+	m_parent(parent) {}
+
 void Item::setPos(float x, float y)
 {
 	m_x = x, m_y = y;
@@ -14,11 +20,15 @@ void Item::setSize(float w, float h)
 	m_w = w, m_h = h;
 }
 
-void Item::setId(const std::string& id)
+void Item::setId(const std::string& value)
 {
-	m_id = id;
+	m_id = value;
 }
 
+void Item::setParent(Item* value)
+{
+	m_parent = value;
+}
 /// Not rotated
 bool Item::isPointInside(float x, float y) const
 {

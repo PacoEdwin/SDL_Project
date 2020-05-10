@@ -12,7 +12,7 @@ class WidgetContainer:
 public:
 	typedef std::shared_ptr<WidgetContainer> Pointer;
 
-	WidgetContainer() = default;
+	WidgetContainer(Item* parent = nullptr);
 	WidgetContainer(const std::vector<Item*>&);
 
 	void setContainer(const std::vector<Item*>&);

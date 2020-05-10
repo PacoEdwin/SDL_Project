@@ -1,5 +1,7 @@
 // prject includes
 #include "button.h"
+#include "application.h"
+#include "applicationwindow.h"
 
 // std incldudes
 #include <iostream>
@@ -7,18 +9,38 @@
 // sdl includes
 #include <SDL.h>
 
-Button::Button():
-	m_pressed(false) {}
+Button::Button(Item* parent):
+	Item(parent),
+	m_pressed(false){}
 
 void Button::onMouseButtonEvent(SDL_MouseButtonEvent* e)
 {
 	if (!isPointInside(e->x, e->y))
 		return;
 
+	bool oldvalue = m_pressed;
+
 	if (e->state == SDL_PRESSED)
+	{
 		m_pressed = !m_pressed;
+		if (m_pressed)
+			auto window = Application::instance().newWindow();
+	}
 	else
 		std::cout << "Wierd?" << std::endl;
+
+	if (m_pressed != oldvalue)
+		update(e->windowID);
+}
+
+void Button::update(int windowId)
+{
+	Application &app = Application::instance();
+	if (auto window = app.windowById(windowId))
+	{
+		ApplicationWindow::RenderCall call = std::bind(&Button::render, this, std::placeholders::_1);
+		window->insertCall(call);
+	}
 }
 
 void Button::render(SDL_Renderer* renderer)
