@@ -1,5 +1,6 @@
 // sdl includes
 #include <SDL.h>
+#include <SDL_image.h>
 
 // project includes
 #include "application.h"
@@ -13,6 +14,9 @@ Application::Application(){}
 Application::~Application()
 {
 	exit();
+
+	IMG_Quit();
+	SDL_Quit();
 }
 
 Application& Application::instance()
