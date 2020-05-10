@@ -9,6 +9,7 @@ class Image:
 {
 public:
 	Image(const std::string&, Item* parent = nullptr);
+	virtual ~Image() override;
 
 	void setPath(const std::string&);
 
@@ -18,11 +19,11 @@ protected:
 	virtual void onMotion(SDL_MouseMotionEvent*) override;
 
 private:
-	bool loadImage(SDL_Renderer*);
 	void update(int windowId);
+	bool loadImage(SDL_Renderer*);
 
 	std::string m_path;
-	SDL_Texture* m_texture;
+	SDL_Texture* m_texture = nullptr;
 
 	int m_imageHeight, m_imageWidth;
 };

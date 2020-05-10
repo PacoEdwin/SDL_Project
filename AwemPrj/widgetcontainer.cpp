@@ -7,6 +7,14 @@ WidgetContainer::WidgetContainer(Item* parent):
 WidgetContainer::WidgetContainer(const std::vector<Item*>& container):
 	m_container(container) {}
 
+WidgetContainer::~WidgetContainer()
+{
+	for (int i = 0; i < m_container.size(); i++)
+		delete m_container[i];
+
+	m_container.clear();
+}
+
 void WidgetContainer::setContainer(const std::vector<Item*>& value)
 {
 	m_container = value;

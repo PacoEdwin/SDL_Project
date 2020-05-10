@@ -20,6 +20,7 @@ public:
 
 	ApplicationWindow();
 	ApplicationWindow(const std::string&);
+	~ApplicationWindow();
 
 	virtual void init() override;
 	void setName(const std::string&);
@@ -39,8 +40,8 @@ public:
 private:
 	bool m_shown = false;
 	int m_windowId = -1;
-	SDL_Window* m_window = NULL;
-	SDL_Renderer* m_renderer = NULL;
+	SDL_Window* m_window = nullptr;
+	SDL_Renderer* m_renderer = nullptr;
 
 	std::string m_name;
 	const int m_screenWidth = 640;

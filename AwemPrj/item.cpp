@@ -10,6 +10,8 @@ Item::Item():
 Item::Item(Item* parent) :
 	m_parent(parent) {}
 
+Item::~Item() {}
+
 void Item::setPos(float x, float y)
 {
 	m_x = x, m_y = y;

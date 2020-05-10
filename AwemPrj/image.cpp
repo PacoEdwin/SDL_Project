@@ -20,6 +20,12 @@ void Image::setPath(const std::string& value)
 	m_path = value;
 }
 
+Image::~Image()
+{
+	if(m_texture)
+		SDL_DestroyTexture(m_texture);
+}
+
 bool Image::loadImage(SDL_Renderer* renderer)
 {
 	if (m_path.empty())

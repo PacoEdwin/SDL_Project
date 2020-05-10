@@ -14,6 +14,7 @@ public:
 
 	WidgetContainer(Item* parent = nullptr);
 	WidgetContainer(const std::vector<Item*>&);
+	virtual ~WidgetContainer() override;
 
 	void setContainer(const std::vector<Item*>&);
 	void addItem(Item*);

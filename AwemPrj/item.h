@@ -13,6 +13,7 @@ class Item
 public:
 	Item();
 	Item(Item*);
+	virtual ~Item();
 
 	void setId(const std::string&);
 	/// For now comment

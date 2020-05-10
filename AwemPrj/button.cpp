@@ -13,6 +13,15 @@ Button::Button(Item* parent):
 	Item(parent),
 	m_pressed(false){}
 
+Button::~Button()
+{
+	if (m_window)
+	{
+		Application::instance().removeWindow(m_window);
+		delete m_window;
+	}
+}
+
 void Button::onMouseButtonEvent(SDL_MouseButtonEvent* e)
 {
 	if (!isPointInside(e->x, e->y))
@@ -23,11 +32,16 @@ void Button::onMouseButtonEvent(SDL_MouseButtonEvent* e)
 	if (e->state == SDL_PRESSED)
 	{
 		m_pressed = !m_pressed;
+		
 		if (m_pressed)
-			auto window = Application::instance().newWindow();
+			m_window = Application::instance().newWindow();
+		else
+		{
+			Application::instance().removeWindow(m_window);
+			delete m_window;
+			m_window = nullptr;
+		}
 	}
-	else
-		std::cout << "Wierd?" << std::endl;
 
 	if (m_pressed != oldvalue)
 		update(e->windowID);

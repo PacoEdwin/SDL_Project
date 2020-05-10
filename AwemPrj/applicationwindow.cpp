@@ -18,6 +18,15 @@ ApplicationWindow::ApplicationWindow()
 ApplicationWindow::ApplicationWindow(const std::string& name):
 	m_name(name) {}
 
+ApplicationWindow::~ApplicationWindow()
+{
+	if (m_window)
+		SDL_DestroyWindow(m_window);
+
+	if(m_renderer)
+		SDL_DestroyRenderer(m_renderer);
+}
+
 void ApplicationWindow::setName(const std::string& value)
 {
 	m_name = value;

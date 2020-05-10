@@ -19,9 +19,9 @@ Application& Application::instance()
 void Application::addWindow(ApplicationWindow* window)
 {
 	int id = window->windowId();
-	
-	m_windowById[id] = window;
+
 	m_windows.push_back(window);
+	m_windowById[id] = { window,  std::prev(m_windows.end()) };
 }
 
 ApplicationWindow* Application::windowById(int value)
@@ -30,7 +30,17 @@ ApplicationWindow* Application::windowById(int value)
 	if (output == m_windowById.end())
 		return nullptr;
 
-	return output->second;
+	return output->second.first;
+}
+
+void Application::removeWindow(ApplicationWindow* value)
+{
+	auto it = m_windowById.find(value->windowId());
+	if (it != m_windowById.end())
+	{
+		m_windows.erase(it->second.second);
+		m_windowById.erase(it);
+	}
 }
 
 ApplicationWindow* Application::newWindow(std::string name)
