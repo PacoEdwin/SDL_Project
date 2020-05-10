@@ -1,5 +1,7 @@
 // project includes
 #include "item.h"
+#include "application.h"
+#include "applicationwindow.h"
 
 // std includes
 #include <iostream>
@@ -10,7 +12,10 @@ Item::Item():
 Item::Item(Item* parent) :
 	m_parent(parent) {}
 
-Item::~Item() {}
+Item::~Item() 
+{
+	/// Parent shall be already deleted
+}
 
 void Item::setPos(float x, float y)
 {
@@ -82,17 +87,19 @@ void Item::handleEvent(SDL_Event* e)
 	}
 }
 
-void Item::render(SDL_Renderer*)
+void Item::update(int windowId)
 {
-
+	Application &app = Application::instance();
+	if (auto window = app.windowById(windowId))
+	{
+		/// Calls render virtually
+		ApplicationWindow::RenderCall call = std::bind(&Item::render, this, std::placeholders::_1);
+		window->insertCall(call);
+	}
 }
 
-void Item::onMotion(SDL_MouseMotionEvent*)
-{
+void Item::render(SDL_Renderer*) {}
 
-}
+void Item::onMotion(SDL_MouseMotionEvent*) {}
 
-void Item::onMouseButtonEvent(SDL_MouseButtonEvent*)
-{
-
-}
+void Item::onMouseButtonEvent(SDL_MouseButtonEvent*) {}

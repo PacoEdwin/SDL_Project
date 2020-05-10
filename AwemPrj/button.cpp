@@ -44,17 +44,7 @@ void Button::onMouseButtonEvent(SDL_MouseButtonEvent* e)
 	}
 
 	if (m_pressed != oldvalue)
-		update(e->windowID);
-}
-
-void Button::update(int windowId)
-{
-	Application &app = Application::instance();
-	if (auto window = app.windowById(windowId))
-	{
-		ApplicationWindow::RenderCall call = std::bind(&Button::render, this, std::placeholders::_1);
-		window->insertCall(call);
-	}
+		this->update(e->windowID);
 }
 
 void Button::render(SDL_Renderer* renderer)

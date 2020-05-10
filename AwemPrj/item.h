@@ -6,6 +6,7 @@
 // sdl includes
 #include "SDL_events.h"
 
+// forward declarations
 struct SDL_Renderer;
 
 class Item
@@ -16,7 +17,7 @@ public:
 	virtual ~Item();
 
 	void setId(const std::string&);
-	/// For now comment
+	/// For now commented out
 	//void setOrder(int);
 	void setPos(float x, float y);
 	void setSize(float w, float h);
@@ -30,7 +31,12 @@ public:
 	virtual std::vector<Item*> childrenAt(float x, float y);
 	/// All Item  s except containers(for now)
 	virtual std::vector<Item*> children();
-
+	
+	/// Updates view
+	/// Some item may need to redefine it
+	virtual void update(int);
+	/// Render is call after construction or 
+	/// as callback after update 
 	virtual void render(SDL_Renderer*);
 	virtual void handleEvent(SDL_Event*);
 

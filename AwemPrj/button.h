@@ -1,9 +1,10 @@
 #pragma once
+// project includes
 #include "item.h"
 
+// forward declarations
 struct SDL_Renderer;
 struct SDL_Texture;
-
 class ApplicationWindow;
 
 class Button :
@@ -13,7 +14,7 @@ public:
 	Button(Item* parent = nullptr);
 	virtual ~Button() override;
 
-	void update(int);
+	/// Render is called after init 
 	virtual void render(SDL_Renderer*) override;
 
 protected:

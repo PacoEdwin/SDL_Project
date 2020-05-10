@@ -12,6 +12,7 @@
 #include "initializable.h"
 #include "widgetcontainer.h"
 
+/// Not sure if ApplicationWindow shall inherit Item
 class ApplicationWindow:
 	public Initializable
 {
@@ -26,16 +27,24 @@ public:
 	void setName(const std::string&);
 
 	SDL_Renderer* renderer() const;
+	/// Call after init
 	void render();
 	
+	/// Recursively returns "deepest" child
 	Item* childAt(float x, float y);
+	/// Return all children except WidgetContainer
+	/// Maybe shall return it as well
 	std::vector<Item*> children();
+	/// All children at that point
 	std::vector<Item*> childrenAt(float x, float y);
 	int windowId() const;
 
-	void insertCall(RenderCall);
-	void handleEvent(SDL_Event*);
+	/// Updates view
 	void update();
+	/// Inserts update callback
+	void insertCall(RenderCall);
+	/// Handle event
+	void handleEvent(SDL_Event*);
 
 private:
 	bool m_shown = false;

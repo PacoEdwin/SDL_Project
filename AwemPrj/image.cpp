@@ -95,13 +95,3 @@ void Image::onMotion(SDL_MouseMotionEvent* e)
 	if (oldValue != m_visible)
 		update(e->windowID);
 }
-
-void Image::update(int windowId)
-{
-	Application &app = Application::instance();
-	if (auto window = app.windowById(windowId))
-	{
-		ApplicationWindow::RenderCall call = std::bind(&Image::render, this, std::placeholders::_1);
-		window->insertCall(call);
-	}
-}

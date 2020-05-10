@@ -19,7 +19,6 @@ protected:
 	virtual void onMotion(SDL_MouseMotionEvent*) override;
 
 private:
-	void update(int windowId);
 	bool loadImage(SDL_Renderer*);
 
 	std::string m_path;
