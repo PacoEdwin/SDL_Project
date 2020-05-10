@@ -10,6 +10,11 @@
 
 Application::Application(){}
 
+Application::~Application()
+{
+	exit();
+}
+
 Application& Application::instance()
 {
 	static Application instance;
@@ -66,9 +71,8 @@ ApplicationWindow* Application::newWindow(std::string name)
 void Application::run()
 {
 	SDL_Event e;
-	bool quit = false;
-
 	/// While application is running
+	bool quit = false;
 	while (!quit)
 	{
 		/// Update
@@ -82,11 +86,33 @@ void Application::run()
 		{
 			/// User requests quit
 			if (e.type == SDL_QUIT)
+			{
 				quit = true;
+				break;
+			}
+
+			/// Exit by key event
+			/*if (e.type == SDL_KEYDOWN)
+			{
+				quit = true;
+				break;
+			}*/
 
 			/// Handle events
 			for (auto window : m_windows)
 				window->handleEvent(&e);
 		}
 	}
+
+	exit();
+}
+
+void Application::exit()
+{
+	while(!m_windows.empty())
+	{
+		auto window = *m_windows.begin();
+		removeWindow(window);
+		delete window;
+	}	
 }

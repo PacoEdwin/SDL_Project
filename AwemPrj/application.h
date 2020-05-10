@@ -12,7 +12,9 @@ class Application
 public:
 	Application();
 	Application(Application const&) = delete;
+	~Application();
 	void operator=(Application const&) = delete;
+
 
 	static Application& instance();
 
@@ -21,6 +23,7 @@ public:
 	void removeWindow(ApplicationWindow*);
 
 	void run();
+	void exit();
 
 private:
 	void addWindow(ApplicationWindow*);

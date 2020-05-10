@@ -163,13 +163,6 @@ void ApplicationWindow::handleEvent(SDL_Event* e)
 	switch (e->type)
 	{
 		case SDL_WINDOWEVENT: {
-			switch (e->window.event) {
-				case SDL_WINDOWEVENT_CLOSE: {
-					std::cout << "asd" << std::endl;
-					break;
-				}
-			}
-
 			m_shown = e->window.windowID == m_windowId;
 			break;
 		}
